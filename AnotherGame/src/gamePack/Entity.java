@@ -13,8 +13,8 @@ public abstract class Entity implements GameObject{
 	public Entity(int x, int y , int width,int height,Color color) {
 		this.x = x;
 		this.y = y;
-		this.width = (int)(width*(AnotherGame.WIDTH/(double)AnotherGame.GAME_WIDTH));
-		this.height = (int)(height*(AnotherGame.HEIGHT/(double)AnotherGame.GAME_HEIGHT));
+		this.width = (int)(width*(AnotherGame.WINDOW_WIDTH/(double)AnotherGame.GAME_WIDTH));
+		this.height = (int)(height*(AnotherGame.WINDOW_HEIGHT/(double)AnotherGame.GAME_HEIGHT));
 		this.color = color;
 		this.setVelX(0);
 		this.setVelY(0);
@@ -29,7 +29,7 @@ public abstract class Entity implements GameObject{
 	@Override
 	public void render(Graphics g) {
 		g.setColor(this.getColor());
-		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		g.fillRect(this.getX() - AnotherGame.cameraX, this.getY() - AnotherGame.cameraY, this.getWidth(), this.getHeight());
 	}
 
 	public int getX() {

@@ -7,20 +7,26 @@ import java.awt.image.BufferStrategy;
 
 public class AnotherGame extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
-	public static final int GAME_WIDTH=2000,GAME_HEIGHT=1000;
+	public static final int GAME_WIDTH=1980,GAME_HEIGHT=1080;
+	public static int cameraX = 0,cameraY = 0;
 	Window window;
 	private boolean running;
-	public static int WIDTH,HEIGHT;
+	public static int WINDOW_WIDTH,WINDOW_HEIGHT;
+	
+	public static Scene scene;
 	
 	Player player;
 	public AnotherGame() {
 		//parameters setup, pre start
 		this.window = new Window(this);
-		WIDTH = this.window.getWidth();
-		HEIGHT = this.window.getHeight();
+		WINDOW_WIDTH = this.window.getWidth();
+		WINDOW_HEIGHT = this.window.getHeight();
+		Tile.updateStuff();
 		player = new Player(10,10,100,100,Color.CYAN);
 		this.addKeyListener(new KeyInput(player));
 		
+		scene = new Scene(50,50);
+		scene.tileMap[0][0] = new Tile(0,0,TileType.blue);
 		//start the game via the run loop -- the game engine
 		this.running = true;
 		this.run();
@@ -70,8 +76,9 @@ public class AnotherGame extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		
 		g.setColor(Color.black);
-		g.fillRect(0, 0,WIDTH, HEIGHT);
+		g.fillRect(0, 0,WINDOW_WIDTH, WINDOW_HEIGHT);
 		
+		scene.render(g);
 		player.render(g);
 
 		

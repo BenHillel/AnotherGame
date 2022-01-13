@@ -13,6 +13,12 @@ public class Player extends Entity{
 
 	@Override
 	public void tick() {
+		if(!this.isInCameraBorderX()) {
+			AnotherGame.cameraX +=(int)this.getVelX();
+		}
+		if(!this.isInCameraBorderY()) {
+			AnotherGame.cameraY +=(int)this.getVelY();
+		}
 		this.setX(this.getX()+(int)this.getVelX());
 		this.setY(this.getY()+(int)this.getVelY());
 		//horizontal movement
@@ -58,5 +64,24 @@ public class Player extends Entity{
 	}
 	public void setDown(boolean val) {
 		this.directions[3] = val;
+	}
+	
+	private boolean isInCameraBorderX() {
+		if(this.getX()<AnotherGame.WINDOW_WIDTH/2) {
+			return true;
+		}
+		if(this.getX() > AnotherGame.scene.getWidth()*Tile.width-AnotherGame.WINDOW_WIDTH/2) {
+			return true;
+		}
+		return false;
+	}
+	private boolean isInCameraBorderY() {
+		if(this.getY()<AnotherGame.WINDOW_HEIGHT/2) {
+			return true;
+		}
+		if(this.getY() > AnotherGame.scene.getHeight()*Tile.height-AnotherGame.WINDOW_HEIGHT/2) {
+			return true;
+		}
+		return false;
 	}
 }
