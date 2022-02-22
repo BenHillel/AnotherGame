@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 public class AnotherGame extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
@@ -12,28 +13,44 @@ public class AnotherGame extends Canvas implements Runnable{
 	Window window;
 	private boolean running;
 	public static int WINDOW_WIDTH,WINDOW_HEIGHT;
+	public static double WIDTH_FACTOR,HEIGHT_FACTOR;
+	public static GameManager gameManager;
 	
-	public static Scene scene;
+	public static Handler handler;
+	public static ImageLoader imageloader;
+	public static Random random;
 	
-	Player player;
+	public static Player player;
 	public AnotherGame() {
 		//parameters setup, pre start
 		this.window = new Window(this);
 		WINDOW_WIDTH = this.window.getWidth();
 		WINDOW_HEIGHT = this.window.getHeight();
+		WIDTH_FACTOR = (WINDOW_WIDTH/(double)GAME_WIDTH);
+		HEIGHT_FACTOR = (WINDOW_HEIGHT/(double)GAME_HEIGHT);
 		Tile.updateStuff();
-		player = new Player(10,10,100,100,Color.CYAN);
-		this.addKeyListener(new KeyInput(player));
+		random = new Random();
 		
-		scene = new Scene(50,50);
-		scene.tileMap[0][0] = new Tile(0,0,TileType.blue);
+		//load images
+		imageloader = new ImageLoader();
+		
+		//Object create - MOVE THIS TO THE PROPER CLASS IN THE FUTURE
+		player = new Player(10,10,150,150);
+		
+		
+		this.addKeyListener(new KeyInput(player));
+		this.addMouseListener(new MouseInput());
+		gameManager = new GameManager(0);
+		handler = new Handler();
+		handler.addGameObject(player, 3);
+		
+		
 		//start the game via the run loop -- the game engine
 		this.running = true;
 		this.run();
 	}
 	
 
-	
 	
 	
 	@Override
@@ -64,7 +81,8 @@ public class AnotherGame extends Canvas implements Runnable{
 	}
 	
 	private void tick() {
-		player.tick();
+		gameManager.tick();
+		handler.tick();
 	}
 	
 	private void render() {
@@ -78,8 +96,8 @@ public class AnotherGame extends Canvas implements Runnable{
 		g.setColor(Color.black);
 		g.fillRect(0, 0,WINDOW_WIDTH, WINDOW_HEIGHT);
 		
-		scene.render(g);
-		player.render(g);
+		gameManager.render(g);
+		handler.render(g);
 
 		
 		bs.show();

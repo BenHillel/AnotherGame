@@ -46,11 +46,11 @@ public class Scene {
 	public TileType intToType(int i) {
 		switch(i) {
 		case 0:
-			return TileType.red;
+			return TileType.sea1;
 		case 1:
-			return TileType.blue;
+			return TileType.sea2;
 		default:
-			return TileType.green;
+			return TileType.sea2;
 		}
 	}
 	
