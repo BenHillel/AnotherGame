@@ -4,19 +4,21 @@ public abstract class Entity implements GameObject{
 	private int x,width;
 	private int y,height;
 	private double velX,velY;
-	protected boolean allay;
+	private Status status;
 	private int health;
+	private int maxHealth;
 	private boolean alive;
-	public Entity(int x, int y,int width,int height) {
+	public Entity(int x, int y,int width,int height,Status status) {
 		this.x = x;
 		this.y = y;
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setHealth(1);
+		this.setMaxHealth(1);
 		this.setVelX(0);
 		this.setVelY(0);
 		this.alive = true;
-		this.allay = true;
+		this.status = status;
 	}
 	
 	@Override 
@@ -25,10 +27,9 @@ public abstract class Entity implements GameObject{
 	}
 	
 	public final void move() {
-		if(isAlive()) {
-			this.x += this.velX;
-			this.y += this.velY;
-		}
+		this.x += this.velX;
+		this.y += this.velY;
+
 	}
 	
 	public boolean onScreen() {
@@ -45,20 +46,20 @@ public abstract class Entity implements GameObject{
 	}
 	
 	public boolean collision(Entity e) {
-		if(isAlive()) {
-			boolean xCollide = false;
-			boolean yCollide = false;
-			//collision on x
-			if((this.x < e.x + e.width && this.x > e.x) || (e.x < this.x + this.width && e.x > this.x)) {
+
+		boolean xCollide = false;
+		boolean yCollide = false;
+		//collision on x
+		if((this.x < e.x + e.width && this.x > e.x) || (e.x < this.x + this.width && e.x > this.x)) {
 				xCollide = true;
-			}
-			//collision on y
-			if((this.y < e.y + e.height && this.y > e.y) || (e.y < this.y + this.height && e.y > this.y)) {
-				yCollide = true;
-			}
-			return xCollide && yCollide;
 		}
-		return false;	
+		//collision on y
+		if((this.y < e.y + e.height && this.y > e.y) || (e.y < this.y + this.height && e.y > this.y)) {
+			yCollide = true;
+		}
+		return xCollide && yCollide;
+
+
 	}
 	
 	public boolean contains(int mx,int my) {
@@ -135,16 +136,28 @@ public abstract class Entity implements GameObject{
 		this.height = (int)(height*(AnotherGame.HEIGHT_FACTOR));
 	}
 	
-	public boolean getAllay() {
-		return this.allay;
+	public Status getStatus() {
+		return this.status;
 	}
-
+	
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
 	public int getHealth() {
 		return health;
 	}
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 
 

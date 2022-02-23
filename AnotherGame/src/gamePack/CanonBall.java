@@ -14,44 +14,40 @@ public class CanonBall extends Projectile{
 	private int speed;
 	private Entity owner; 
 	public CanonBall(int x, int y,int tx,int ty,double size,int speed,int damage,Entity owner) {
-		super(x, y,(int)size,(int)size);
+		super(x, y,(int)size,(int)size,owner.getStatus());
 		this.size = size;
 		this.timeToLive = 120;
 		this.speed = speed;
 		this.owner = owner;
 		this.damage = damage;
-		this.allay = owner.allay;
 		this.setDirection(tx, ty);
 	}
 	public CanonBall(int x, int y,int tx,int ty,int speed,int damage,Entity owner) {
-		super(x, y,(int)DEFAULT_SIZE,(int)DEFAULT_SIZE);
+		super(x, y,(int)DEFAULT_SIZE,(int)DEFAULT_SIZE,owner.getStatus());
 		this.size = DEFAULT_SIZE;
 		this.timeToLive = 120;
 		this.speed = speed;
 		this.owner = owner;
 		this.damage = damage;
-		this.allay = owner.allay;
 		this.setDirection(tx, ty);
 	}
 	public CanonBall(int x, int y,int tx,int ty,double size,int damage,Entity owner) {
-		super(x, y,(int)size,(int)size);
+		super(x, y,(int)size,(int)size,owner.getStatus());
 		this.size = size;
 		this.timeToLive = 120;
 		this.speed = DEFAULT_SPEED;
 		this.owner = owner;
 		this.damage = damage;
-		this.allay = owner.allay;
 		this.setDirection(tx, ty);
 	}
 	
 	public CanonBall(int x, int y,int tx,int ty,int damage,Entity owner) {
-		super(x, y,(int)DEFAULT_SIZE,(int)DEFAULT_SIZE);
+		super(x, y,(int)DEFAULT_SIZE,(int)DEFAULT_SIZE,owner.getStatus());
 		this.size = DEFAULT_SIZE;
 		this.timeToLive = 120;
 		this.speed = DEFAULT_SPEED;
 		this.owner = owner;
 		this.damage = damage;
-		this.allay = owner.allay;
 		this.setDirection(tx, ty);
 	}
 	
@@ -116,8 +112,8 @@ public class CanonBall extends Projectile{
 	
 	private void checkCollisions() {
 		for(Entity e : AnotherGame.handler.getObjectsCloseTo(this, DISTANCE_TO_CHECK_COLLISIONS)) {
-			if(this.allay) {
-				if(!e.allay && e instanceof EnemyShip) {
+			if(getStatus().equals(Status.ALLAY)) {
+				if(e.getStatus().equals(Status.ENEMY) && e instanceof EnemyShip) {
 					if(this.collision(e)) {
 						e.getHit(damage,this.owner);
 						AnotherGame.handler.removeGameObject(this);
@@ -125,7 +121,7 @@ public class CanonBall extends Projectile{
 					}
 				}
 			}else {
-				if(e.allay ) {
+				if(e.getStatus().equals(Status.ALLAY) ) {
 					if(this.collision(e)) {
 						e.getHit(damage,this.owner);
 						AnotherGame.handler.removeGameObject(this);

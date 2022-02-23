@@ -32,7 +32,7 @@ public class Player extends Entity{
 	private static int cannonBallDamage = 3;
 	
 	public Player(int x, int y, int width, int height) {
-		super(x, y,width,height);
+		super(x, y,width,height,Status.ALLAY);
 		this.setWidth(width);
 		this.setHeight(height);
 		this.directions = new boolean[4];
@@ -257,7 +257,7 @@ public class Player extends Entity{
 	
 	public void target(EnemyShip e) {
 		if(e == null) return;
-		if(!e.allay) {
+		if(!e.getStatus().equals(Status.ALLAY)) {
 			targeted = e;
 			for(EnemyShip pos : this.possesed) {
 				pos.setTarget(e);

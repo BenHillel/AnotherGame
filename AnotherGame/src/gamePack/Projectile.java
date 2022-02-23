@@ -3,12 +3,13 @@ package gamePack;
 public abstract class Projectile implements GameObject{
 	private int x,y,width,height;
 	private double velX,velY;
-	public Projectile(int x,int y,int width,int height) {
+	private Status status;
+	public Projectile(int x,int y,int width,int height,Status status) {
 		this.x = x;
 		this.y = y;
 		this.setHeight(height);;
 		this.setWidth(width);;
-
+		this.setStatus(status);
 	}
 	
 	@Override
@@ -90,6 +91,13 @@ public abstract class Projectile implements GameObject{
 	}
 	public void setVelY(double velY) {
 		this.velY = velY;
+	}
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	protected boolean allay;
 	

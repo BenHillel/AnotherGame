@@ -101,28 +101,13 @@ public class BasicEnemyShip extends EnemyShip{
 	public void getHit(int damage,Entity shooter) {
 		super.getHit(damage,shooter);
 		this.hostile = true;
-		if(!this.allay) {
+		if(!getStatus().equals(Status.ALLAY)) {
 			setSpeed(5);
 		}
 		
 	}
 	
-	private void goToTarget() {
-		int distX = getTarget().getX() - this.getX();
-		int distY = getTarget().getY() - this.getY();
-		double dist = this.distanceFrom(getTarget());
-		this.setVelX((distX/dist)*getSpeed());
-		this.setVelY((distY/dist)*getSpeed());
-		this.move();
-	}
-	private void goToPlayer() {
-		int distX = AnotherGame.player.getX() - this.getX();
-		int distY = AnotherGame.player.getY() - this.getY();
-		double dist = this.distanceFrom(AnotherGame.player);
-		this.setVelX((distX/dist)*getSpeed());
-		this.setVelY((distY/dist)*getSpeed());
-		this.move();
-	}
+
 	
 	private void circleAroundPlayer() {
 		int distX = AnotherGame.player.getX() - this.getX();

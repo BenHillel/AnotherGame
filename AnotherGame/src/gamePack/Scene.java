@@ -49,6 +49,8 @@ public class Scene {
 			return TileType.sea1;
 		case 1:
 			return TileType.sea2;
+		case 2:
+			return TileType.sea3;
 		default:
 			return TileType.sea2;
 		}
